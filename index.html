@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Paru ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #fff5f5; overflow-x: hidden; font-family: 'Arial', sans-serif; margin: 0; }
+        .page { display: none; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center; position: relative; z-index: 10; }
+        .active { display: flex; animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        /* Animated Background Hearts */
+        .bg-hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .heart-float { position: absolute; color: rgba(245, 101, 101, 0.2); animation: float 6s infinite linear; }
+        @keyframes float { 
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Flying Paper Plane & Letter */
+        .plane-container { position: fixed; top: 15%; left: -150px; z-index: 50; animation: flyPlane 10s infinite linear; pointer-events: none; }
+        .letter-tail { position: absolute; top: 15px; left: -30px; background: white; border: 1px solid #ffccd5; padding: 2px 5px; font-size: 10px; border-radius: 2px; transform: rotate(-5deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        @keyframes flyPlane {
+            0% { left: -150px; transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(30px) rotate(-5deg); }
+            100% { left: 110vw; transform: translateY(0) rotate(5deg); }
+        }
+
+        /* Gift Box Animation */
+        .gift-container { position: relative; width: 120px; height: 100px; cursor: pointer; transition: transform 0.3s; margin: 20px auto; }
+        .gift-box { width: 100%; height: 100%; background: #f87171; border-radius: 5px; position: relative; }
+        .gift-lid { width: 130px; height: 30px; background: #ef4444; position: absolute; top: -10px; left: -5px; border-radius: 5px; transition: 0.5s ease; z-index: 2; }
+        .gift-ribbon { position: absolute; top: 0; left: 50%; width: 15px; height: 100%; background: #fee2e2; transform: translateX(-50%); }
+        .open .gift-lid { transform: translateY(-60px) rotate(-15deg); opacity: 0; }
+        .message-reveal { opacity: 0; transform: translateY(20px); transition: 1s ease; }
+        .open + .message-reveal { opacity: 1; transform: translateY(0); }
+
+        .btn-main { background-color: #f87171; color: white; padding: 12px 30px; border-radius: 9999px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="heartBg"></div>
+
+    <div class="plane-container">
+        <span class="text-3xl">✈️</span>
+        <div class="letter-tail">Love for Paru ✉️</div>
+    </div>
+
+    <div id="page1" class="page active">
+        <h1 class="text-4xl font-bold text-red-500 mb-2">Hai Paru! ❤️</h1>
+        <p class="text-xl text-gray-600 italic">It's your eecha...</p>
+        <p class="mt-6 text-gray-500">I have a 15-page surprise for you.</p>
+        <button onclick="nextPage(2)" class="btn-main mt-8">Begin Journey →</button>
+    </div>
+
+    <div id="page2" class="page">
+        <h2 class="text-3xl font-bold text-red-500 mb-4">Welcome to our World!</h2>
+        <p class="text-lg text-gray-700 max-w-xs">Every step here is filled with my love for you.</p>
+        <button onclick="nextPage(3)" class="btn-main mt-8">Next Page →</button>
+    </div>
+
+    <div id="page3" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-6">Love Quiz 📝</h2>
+        <p class="mb-6 text-gray-700">Who is the luckiest guy in the world?</p>
+        <div class="space-y-4 w-full max-w-xs">
+            <button onclick="nextPage(4)" class="w-full py-3 bg-white border-2 border-red-200 rounded-xl">Eecha (Because of Paru!)</button>
+            <button onclick="alert('Wrong! Guess again! 😂')" class="w-full py-3 bg-white border-2 border-red-200 rounded-xl">Some random guy</button>
+        </div>
+    </div>
+
+    <div id="page4" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-2">Catch My Love 🎮</h2>
+        <p class="text-sm text-gray-500 mb-6">Tap the heart 5 times!</p>
+        <div id="game-target" onclick="scorePoint()" class="text-5xl cursor-pointer p-4 select-none">❤️</div>
+        <p class="mt-10 font-bold">Score: <span id="score">0</span>/5</p>
+    </div>
+
+    <div id="page5" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-6">Find My Likes ✨</h2>
+        <div class="grid grid-cols-2 gap-3 w-full max-w-xs">
+            <div onclick="this.innerText='Your Smile'; this.classList.add('bg-red-50')" class="h-20 flex items-center justify-center border rounded-lg bg-white shadow-sm">?</div>
+            <div onclick="this.innerText='Your Heart'; this.classList.add('bg-red-50')" class="h-20 flex items-center justify-center border rounded-lg bg-white shadow-sm">?</div>
+            <div onclick="this.innerText='Your Voice'; this.classList.add('bg-red-50')" class="h-20 flex items-center justify-center border rounded-lg bg-white shadow-sm">?</div>
+            <div onclick="this.innerText='Everything'; this.classList.add('bg-red-50')" class="h-20 flex items-center justify-center border rounded-lg bg-white shadow-sm">?</div>
+        </div>
+        <button onclick="nextPage(6)" class="btn-main mt-10">Page 6 →</button>
+    </div>
+
+    <div id="page6" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-4">Date Idea Generator 🍕</h2>
+        <div id="date-res" class="text-xl font-bold text-gray-700 h-16 flex items-center">???</div>
+        <button onclick="genDate()" class="bg-pink-500 text-white px-6 py-2 rounded-lg mb-6">Spin!</button>
+        <button onclick="nextPage(7)" class="text-red-400 underline block mt-4">Continue</button>
+    </div>
+
+    <div id="page7" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-4">Reasons Why...</h2>
+        <p class="text-gray-700 italic">"Because you make the world feel safe."</p>
+        <button onclick="nextPage(8)" class="btn-main mt-10">Next →</button>
+    </div>
+
+    <div id="page8" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-2">Plant Flowers 🌸</h2>
+        <div id="garden" onclick="plantFlower(event)" class="w-full max-w-xs h-64 bg-green-50 border-2 border-dashed border-green-200 relative overflow-hidden rounded-xl"></div>
+        <button onclick="nextPage(9)" class="btn-main mt-8">Next →</button>
+    </div>
+
+    <div id="page9" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-4">Compliment Bot 🤖</h2>
+        <div id="comp-text" class="text-lg italic text-gray-700 mb-8 px-4 h-20 flex items-center text-center">"You're amazing."</div>
+        <button onclick="newComp()" class="bg-gray-800 text-white px-6 py-2 rounded-full">New Compliment</button>
+        <button onclick="nextPage(10)" class="mt-8 text-red-400">Page 10</button>
+    </div>
+
+    <div id="page10" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-4">My Promise 💍</h2>
+        <p class="text-gray-600 bg-white p-4 rounded-lg shadow">I will always be your biggest supporter and your best friend.</p>
+        <button onclick="nextPage(11)" class="btn-main mt-10">Next</button>
+    </div>
+
+    <div id="page11" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-4">Our Future ✈️</h2>
+        <ul class="text-left space-y-2">
+            <li>✅ Meet up soon</li>
+            <li>⏳ Dream vacation</li>
+            <li>⏳ Forever together</li>
+        </ul>
+        <button onclick="nextPage(12)" class="btn-main mt-10">Page 12</button>
+    </div>
+
+    <div id="page12" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-4">A Sweet Thought 📸</h2>
+        <p class="text-gray-600">Think of our best day together... that's my favorite memory.</p>
+        <button onclick="nextPage(13)" class="btn-main mt-10">Next</button>
+    </div>
+
+    <div id="page13" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-4">Love Coupon 🎟️</h2>
+        <div class="bg-yellow-50 border-2 border-yellow-400 p-6 rounded-lg shadow-md">
+            <p class="font-bold text-yellow-700 text-xl">1 FREE DATE</p>
+            <p class="text-sm text-yellow-600">Claim it anytime!</p>
+        </div>
+        <button onclick="nextPage(14)" class="btn-main mt-12">Almost There</button>
+    </div>
+
+    <div id="page14" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-4">Love Status</h2>
+        <div class="text-6xl font-bold text-gray-800">∞</div>
+        <button onclick="nextPage(15)" class="btn-main mt-10">Final Surprise →</button>
+    </div>
+
+    <div id="page15" class="page">
+        <h2 class="text-2xl font-bold text-red-500 mb-4">A Gift for Paru 🎁</h2>
+        <p class="text-sm text-gray-400 mb-4">Tap the box to open it!</p>
+        
+        <div id="giftContainer" class="gift-container" onclick="openGift()">
+            <div class="gift-lid"></div>
+            <div class="gift-box">
+                <div class="gift-ribbon"></div>
+            </div>
+        </div>
+
+        <div id="finalMessage" class="message-reveal max-w-xs text-gray-700 leading-relaxed bg-white p-6 rounded-xl shadow-xl mt-6">
+            <h3 class="text-xl font-bold text-red-500 mb-2">I Love You!</h3>
+            <p>Paru, you are my everything. Thank you for being in my life and for being so special. I love you more every day.</p>
+            <p class="mt-4 font-bold text-red-400">- Yours, Eecha</p>
+            <button onclick="location.reload()" class="mt-6 text-xs text-gray-400 underline">Restart Journey</button>
+        </div>
+    </div>
+
+    <script>
+        function nextPage(n) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + n).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function createHeart() {
+            const container = document.getElementById('heartBg');
+            const heart = document.createElement('div');
+            heart.classList.add('heart-float');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 400);
+
+        let score = 0;
+        function scorePoint() {
+            score++;
+            document.getElementById('score').innerText = score;
+            if(score >= 5) nextPage(5);
+            else {
+                const target = document.getElementById('game-target');
+                target.style.position = 'absolute';
+                target.style.left = Math.random() * 70 + 15 + '%';
+                target.style.top = Math.random() * 70 + 15 + '%';
+            }
+        }
+
+        function genDate() {
+            const options = ["Movie Night 🎬", "Dinner Date 🍕", "Ice Cream Date 🍦", "Stargazing ✨"];
+            document.getElementById('date-res').innerText = options[Math.floor(Math.random()*options.length)];
+        }
+
+        function plantFlower(e) {
+            const f = document.createElement('span');
+            f.innerHTML = Math.random() > 0.5 ? '🌸' : '🌻';
+            f.style.position = 'absolute';
+            f.style.left = (e.offsetX - 10) + 'px';
+            f.style.top = (e.offsetY - 10) + 'px';
+            document.getElementById('garden').appendChild(f);
+        }
+
+        function newComp() {
+            const comps = ["You are magic.", "Your heart is gold.", "You are my favorite person."];
+            document.getElementById('comp-text').innerText = `"${comps[Math.floor(Math.random()*comps.length)]}"`;
+        }
+
+        function openGift() {
+            document.getElementById('giftContainer').classList.add('open');
+        }
+    </script>
+</body>
+</html>
